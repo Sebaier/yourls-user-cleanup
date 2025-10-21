@@ -1,85 +1,92 @@
 # 🧹 YOURLS User Cleanup Plugin
 
-Ein YOURLS-Plugin zur automatischen Bereinigung alter ShortURLs bestimmter Benutzerkonten.  
-Das Plugin löscht alle Kurzlinks, die älter als eine festgelegte Anzahl von Wochen sind und von ausgewählten Nutzern erstellt wurden.
+A YOURLS plugin that automatically removes old ShortURLs from selected user accounts.
+It deletes all short links older than a defined number of weeks, created by specific users — helping you keep your YOURLS database clean and efficient.
 
 ---
 
-## 📋 Funktionsbeschreibung
+## 📋 Overview
 
-Das **YOURLS User Cleanup Plugin** ermöglicht Administratoren, gezielt alte ShortURLs zu entfernen, die über den **Multi-User-Modus** (bereitgestellt durch das Plugin [AuthMgrPlus](https://github.com/joshp23/YOURLS-AuthMgrPlus)) erstellt wurden.  
-Es eignet sich insbesondere für Umgebungen, in denen temporäre oder automatisiert erzeugte Links (z. B. API-Zugriffe oder Kampagnen-URLs) regelmäßig bereinigt werden sollen.
+The **YOURLS User Cleanup Plugin** enables administrators to automatically or manually remove outdated ShortURLs created through the **multi-user mode** (provided by [AuthMgrPlus](https://github.com/joshp23/YOURLS-AuthMgrPlus)).
+It’s especially useful in setups where temporary or automatically generated links — such as API calls, campaign URLs, or testing links — accumulate over time and need to be cleaned up regularly.
 
 ---
 
-## ⚠️ Wichtiger Hinweis zur Kompatibilität
+## ⚠️ Compatibility Notice
 
-> **Dieses Plugin funktioniert derzeit nur in Kombination mit dem Plugin [AuthMgrPlus](https://github.com/joshp23/YOURLS-AuthMgrPlus).**  
->  
-> YOURLS speichert standardmäßig keinen Benutzernamen in der URL-Tabelle.  
-> AuthMgrPlus erweitert die Datenbank um eine Spalte `user`, in der der Ersteller der ShortURL gespeichert wird.  
-> Ohne diese Erweiterung kann das Plugin keine Zuordnung zu Benutzern herstellen – und somit auch keine gezielte Bereinigung durchführen.
+> **This plugin currently requires [AuthMgrPlus](https://github.com/joshp23/YOURLS-AuthMgrPlus) to function properly.**
+>
+> YOURLS doesn’t natively store the username of the user who created a ShortURL.
+> AuthMgrPlus extends the YOURLS database with an additional `user` column that records the creator of each link.
+> Without this column, user-specific cleanup isn’t possible, as YOURLS cannot associate links with individual users.
 
 ---
 
 ## 🧩 Features
 
-- ✅ Auswahl einzelner Benutzer, deren Links bereinigt werden sollen  
-- 🕒 Auswahl des Alters der zu löschenden Links (z. B. 1, 2, 4, 8 Wochen usw.)  
-- 🧠 Schutzprüfung: Löscht nur, wenn mindestens ein Benutzer ausgewählt ist  
-- 🗄️ Kompatibel mit **MariaDB** und **MySQL**  
-- 🧰 Bedienung vollständig über das YOURLS-Admin-Interface  
+* ✅ Select which users’ links should be deleted
+* 🕒 Choose how old links must be before deletion (e.g., 1, 2, 4, or 8 weeks)
+* 🧠 Safety check: deletion only runs if at least one user is selected
+* 🗄️ Works with **MariaDB** and **MySQL**
+* 🧰 Fully integrated into the YOURLS admin interface
 
 ---
 
 ## ⚙️ Installation
 
-1. Lade das Plugin herunter oder klone das Repository:  
-    ```bash
+1. Download or clone the repository:
+
+   ```bash
    git clone https://github.com/Sebaier/yourls-user-cleanup.git
-    ````
-2. Kopiere den Plugin-Ordner in dein YOURLS-Verzeichnis:
+   ```
+2. Copy the plugin folder into your YOURLS installation:
+
    ```
    /user/plugins/yourls-user-cleanup/
    ```
-3. Aktiviere das Plugin im YOURLS-Adminbereich unter **Admin → Plugins**.
-4. Stelle sicher, dass **AuthMgrPlus** aktiv ist und Benutzer-Daten in der Tabelle `yourls_url` unter der Spalte `user` gespeichert werden.
+3. Activate the plugin via the YOURLS admin panel (**Admin → Plugins**).
+4. Make sure **AuthMgrPlus** is active and that user data is being stored in the `yourls_url` table under the `user` column.
 
 ---
 
-## 🧭 Verwendung
+## 🧭 Usage
 
-1. Öffne im Adminbereich die Seite:
-   **User Cleanup**
-2. Wähle:
-   
-   * Das Alter der Links (Dropdown)
-   * Einen oder mehrere Benutzer (Checkbox)
-3. Klicke auf **„Vorschau anzeigen“**
-4. Klicke auf **"Jetzt x Links löschen"**
-5. Das Plugin löscht automatisch alle Einträge, deren `timestamp` älter als der gewählte Zeitraum ist.
+1. Open the **User Cleanup** page in the YOURLS admin area.
+2. Select:
 
----
-
-## 🧰 Voraussetzungen
-
-| Komponente         | Erforderlich     |
-| ------------------ | ---------------- |
-| YOURLS             | ≥ 1.9            |
-| PHP                | ≥ 7.4            |
-| MariaDB/MySQL      | ✅                |
-| AuthMgrPlus Plugin | **erforderlich** |
+   * The age threshold for links (via dropdown)
+   * One or more users (via checkboxes)
+3. Click **“Show Preview”** to review which links will be deleted.
+4. Click **“Delete x Links Now”** to confirm and execute the cleanup.
+5. The plugin will automatically remove all entries whose `timestamp` is older than the selected age.
 
 ---
 
-## 🚀 Zukünftige Erweiterungen
+## 🧰 Requirements
 
-* 🕓 Automatische Bereinigung per Cron-Job
-* 🔄 Unterstützung ohne AuthMgrPlus (z. B. über benutzerdefinierte Metafelder)
-* 🌐 Mehrsprachigkeit
+| Component          | Minimum Version |
+| ------------------ | --------------- |
+| YOURLS             | ≥ 1.9           |
+| PHP                | ≥ 7.4           |
+| MariaDB/MySQL      | ✅ Supported     |
+| AuthMgrPlus Plugin | **Required**    |
 
 ---
 
-## 📄 Lizenz
+## 🚀 Planned Features
 
-Dieses Projekt steht unter der [MIT License](LICENSE).
+* 🕓 Automatic scheduled cleanup via cron job
+* 🔄 Operation without AuthMgrPlus (e.g., using custom meta fields)
+* 🌐 Multi-language support
+
+---
+
+## 📄 License
+
+Licensed under the [MIT License](LICENSE).
+
+---
+
+### 💡 Developer Notes
+
+This plugin is ideal for administrators maintaining large multi-user YOURLS environments. It ensures database performance by preventing link bloat and simplifies maintenance for automated systems or temporary users. Contributions and pull requests are welcome — especially for extending compatibility beyond AuthMgrPlus or adding internationalization support.
